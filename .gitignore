@@ -49,3 +49,8 @@ coverage/
 # Misc
 *.local
 *.tsbuildinfo
+
+# tsc -b emits these next to vite.config.ts; ignore them so they don't
+# sneak into commits. Source of truth is vite.config.ts.
+vite.config.js
+vite.config.d.ts

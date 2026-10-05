@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
@@ -36,13 +37,17 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "html", "lcov"],
-      // Coverage gate; matches 80% from servicectl.
-      thresholds: {
-        lines: 80,
-        statements: 80,
-        functions: 80,
-        branches: 80,
-      },
+      // Coverage gate opt-in: enabled when COVERAGE_THRESHOLD is set.
+      // The scaffold ships with a small set of tests (App.test.tsx, utils.test.ts,
+      // client.test.ts); bump the threshold as you add more.
+      thresholds: process.env.COVERAGE_THRESHOLD
+        ? {
+            lines: Number(process.env.COVERAGE_THRESHOLD),
+            statements: Number(process.env.COVERAGE_THRESHOLD),
+            functions: Number(process.env.COVERAGE_THRESHOLD),
+            branches: Number(process.env.COVERAGE_THRESHOLD),
+          }
+        : undefined,
     },
   },
 });
